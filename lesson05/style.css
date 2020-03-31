@@ -1,0 +1,42 @@
+.chess {
+    width: 640px;
+    height: 640px;
+    margin-left: 200px;
+}
+
+.blackField {
+    width: 80px;
+    height: 80px;
+    background-color: black;
+    float: left;
+}
+
+.brownField {
+    width: 80px;
+    height: 80px;
+    background-color: sandybrown;
+    float: left;
+}
+
+.colorSquare {
+    width: 50px;
+    height: 50px;
+}
+
+.chooseColorSquare {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin-top: 150px;
+    margin-left: 120px;
+}
+
+.gallery {
+    display: flex;
+    flex-direction: row;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+}
