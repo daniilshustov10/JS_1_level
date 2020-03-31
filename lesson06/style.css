@@ -1,0 +1,98 @@
+body {
+    background-color: gainsboro;
+}
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* галерея */
+
+.gallery {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choose-color {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    margin-top: 30px;
+}
+
+.panel {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+}
+
+.left-button, .right-button {
+    background: none;
+    border: none;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.left-button:hover, .right-button:hover {
+    cursor: pointer;
+    color: blue
+}
+
+.square {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}
+
+.panel-color-items {
+    display: flex;
+    width: 400px;
+    align-items: center;
+}
+
+.active {
+    border: 1px solid black;
+}
+
+
+/* шахматы */
+
+.chess {
+    width: 402px;
+    margin-right: 160px;
+}
+
+.field {
+    width: 50px;
+    height: 50px;
+    float: left;
+    font-size: 32px;
+    text-align: center;
+
+}
+
+.light {
+    background-color: yellow;
+}
+
+.dark {
+    background-color: grey;
+}
+
+
+
+
+
+
+
+
+
+
+
+
