@@ -1,29 +1,3 @@
-function addChess(background) {
-    const chess = document.querySelector('.chess');
-
-    const field = document.createElement('div');
-    field.classList.add('field');
-    if (background) {
-        field.classList.add(background);
-    }
-    chess.append(field);
-}
-  
-const color = {
-    one: 'light',
-    two: 'dark'
-}
-
-for (let i = 0; i < 64; i++) {
-    if (i % 8 == 0) {
-        color.one = (color.one == 'light') ? 'dark' : 'light';
-        color.two = (color.one == 'light') ? 'dark' : 'light';
-    }
-    const colorClass = (i % 2 != 0) ? color.one : color.two;
-    addChess(colorClass);
-}
-
-
 const figures = {
     black: {
         king: '&#9818',
@@ -44,30 +18,85 @@ const figures = {
     }
   };
 
-const positionBlackFigures = [
-    figures.black.rook, figures.black.knight, figures.black.bishop, figures.black.queen, 
-    figures.black.king,  figures.black.bishop, figures.black.knight, figures.black.rook,
-    figures.black.pawn, figures.black.pawn, figures.black.pawn, figures.black.pawn,
-    figures.black.pawn, figures.black.pawn, figures.black.pawn,figures.black.pawn];
+const board = [
+    {color: "dark", figure: figures.black.rook, active: false}, {color: "light", figure: figures.black.knight, active: false}, {color: "dark", figure: figures.black.bishop, active: false}, {color: "light", figure: figures.black.king, active: false}, {color: "dark", figure: figures.black.queen, active: false}, {color: "light", figure: figures.black.bishop, active: false}, {color: "dark", figure: figures.black.knight, active: false}, {color: "light", figure: figures.black.rook, active: false},
+    {color: "light", figure: figures.black.pawn, active: false}, {color: "dark", figure: figures.black.pawn, active: false}, {color: "light", figure: figures.black.pawn, active: false}, {color: "dark", figure: figures.black.pawn, active: false}, {color: "light", figure: figures.black.pawn, active: false}, {color: "dark", figure: figures.black.pawn, active: false}, {color: "light", figure: figures.black.pawn, active: false}, {color: "dark", figure: figures.black.pawn, active: false},
+    {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false},
+    {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false},
+    {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false},
+    {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false}, {color: "light", figure: null, active: false}, {color: "dark", figure: null, active: false},
+    {color: "dark", figure: figures.white.pawn, active: false}, {color: "light", figure: figures.white.pawn, active: false}, {color: "dark", figure: figures.white.pawn, active: false}, {color: "light", figure: figures.white.pawn, active: false}, {color: "dark", figure: figures.white.pawn, active: false}, {color: "light", figure: figures.white.pawn, active: false}, {color: "dark", figure: figures.white.pawn, active: false}, {color: "light", figure: figures.white.pawn, active: false},
+    {color: "light", figure: figures.white.rook, active: false}, {color: "dark", figure: figures.white.knight, active: false}, {color: "light", figure: figures.white.bishop, active: false}, {color: "dark", figure: figures.white.king, active: false}, {color: "light", figure: figures.white.queen, active: false}, {color: "dark", figure: figures.white.bishop, active: false}, {color: "light", figure: figures.white.knight, active: false}, {color: "dark", figure: figures.white.rook, active: false},   
+];
 
-const positionWhiteFigures = [
-    figures.white.pawn, figures.white.pawn, figures.white.pawn, figures.white.pawn,
-    figures.white.pawn, figures.white.pawn, figures.white.pawn,figures.white.pawn,
-    figures.white.rook, figures.white.knight, figures.white.bishop, figures.white.queen, 
-    figures.white.king,  figures.white.bishop, figures.white.knight, figures.white.rook
-    ];
 
-function arrangeChess() {
-    const fields = document.querySelectorAll('.field');
 
-    for (let i = 0; i < 16; i++) {
-        fields[i].innerHTML = positionBlackFigures[i];
-    }
+
+
+function addChess(options) {
+    const {
+        color, 
+        figure,
+        index,
+        active,
+    } = options;
+
+    const chess = document.querySelector('.chess');
+
+    const field = document.createElement('div');
+    field.classList.add('field');
+
+    field.addEventListener('click', () => eventMove(index));
     
-    for (let i = 0; i < 16; i++) {
-        fields[i+48].innerHTML = positionWhiteFigures[i];
-    }
+    
+    if (figure) field.innerHTML = figure;
+    if (color) field.classList.add(color);
+    if (active) field.classList.add('activeField');
+
+    chess.append(field);  
 }
 
-arrangeChess();
+function getChessBoard() {
+    board.forEach(function(item, index) {
+        
+        const options = {
+            color: item.color,
+            figure: item.figure,
+            index: index,
+            active: item.active,
+        }
 
+        addChess(options);
+    });
+}
+    
+function eventMove(index) {
+
+    let currentActiveIndex;
+
+    const isActiveCell = board.filter(function(item, indexActiveField) {
+       if (item.active) currentActiveIndex = indexActiveField;
+        return item.active;
+    });
+
+   if (!isActiveCell[0] && board[index].figure) {
+       board[index].active = true;
+    } 
+
+    if (isActiveCell[0]) {        
+        board[index].figure = board[currentActiveIndex].figure;
+        board[currentActiveIndex].figure = null;
+        board[currentActiveIndex].active = false;      
+    } 
+
+    
+    redrawBoard();   
+}
+
+function redrawBoard() {
+    let chess = document.querySelector('.chess');
+    chess.innerHTML = '';
+    getChessBoard();
+}
+
+getChessBoard();
